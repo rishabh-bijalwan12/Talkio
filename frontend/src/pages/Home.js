@@ -51,7 +51,7 @@ export function Home() {
     setLoadingUser(true);
     const fetchUsers = async () => {
       try {
-        const response = await fetch('https://talkio-cy0z.onrender.comapi/auth/users');
+        const response = await fetch('https://talkio-cy0z.onrender.com/api/auth/users');
         const data = await response.json();
         setUsers(data.users);
       } catch (error) {
@@ -70,7 +70,7 @@ export function Home() {
     setLoadingChat(true);
     const fetchChats = async () => {
       try {
-        const response = await fetch(`https://talkio-cy0z.onrender.comapi/message/getmessage/${selectedUserId}`, {
+        const response = await fetch(`https://talkio-cy0z.onrender.com/api/message/getmessage/${selectedUserId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -91,7 +91,7 @@ export function Home() {
     e.preventDefault();
     if (newMessage.trim()) {
       try {
-        const response = await fetch(`https://talkio-cy0z.onrender.comapi/message/sendmessage/${selectedUserId}`, {
+        const response = await fetch(`https://talkio-cy0z.onrender.com/api/message/sendmessage/${selectedUserId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
