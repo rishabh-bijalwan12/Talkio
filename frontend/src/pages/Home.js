@@ -26,7 +26,7 @@ export function Home() {
   // Establishing socket connection
   useEffect(() => {
     if (currUser) {
-      socket.current = io('http://localhost:5000');
+      socket.current = io('https://talkio-cy0z.onrender.com');
       socket.current.emit('add-user', currUser);
     }
   }, [currUser]);
