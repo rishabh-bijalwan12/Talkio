@@ -23,7 +23,7 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
   cors: {
-    origin: '*',
+    origin: 'https://talkio12.netlify.app',
     methods: ['GET', 'POST'],
     credentials: true,
   },
