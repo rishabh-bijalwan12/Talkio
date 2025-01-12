@@ -14,7 +14,7 @@ function UserProfile() {
         // Fetch user data and set the state
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`https://talkio-cy0z.onrender.com:/api/auth/user${myId}`);
+                const response = await fetch(`https://talkio-cy0z.onrender.com:/api/auth/user/${myId}`);
                 const data = await response.json();
                 setUser(data.user);
                 setLoadingProfile(false);
