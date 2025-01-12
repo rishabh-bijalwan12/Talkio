@@ -23,7 +23,7 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
   cors: {
-    origin: 'https://talkio-lime.vercel.app/',
+    origin: 'https://talkio-lime.vercel.app',
     methods: ['GET', 'POST'],
     credentials: true,
   },
