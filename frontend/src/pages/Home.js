@@ -3,8 +3,9 @@ import { UserList } from '../components/UserList';
 import { Chats } from '../components/Chats';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+import defaultProfilePicture from '../images/default profile picture.png'
+
 
 export function Home() {
   const [users, setUsers] = useState([]);
@@ -144,107 +145,130 @@ export function Home() {
     }
   }, [arrivalMsg]);
 
-
-
-  const handleLogout = () => {
-    localStorage.clear();
-    toast.success("Logout sucessfull");
-    navigate('/login');
-  };
+  const handleProfileClick = () => {
+    navigate('/userprofile');
+  }
 
   return (
-    <div className="h-screen flex flex-row">
-      {/* Left Sidebar - User List */}
-      <div
-        className={
-          isSelected && screenSize === 'small'
-            ? 'hidden'
-            : 'w-full md:w-2/5 lg:w-1/4 border-b lg:border-r border-gray-200 bg-white flex flex-col h-full'
-        }
-      >
-        <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-800">Users</h2>
-        </div>
-        {loadingUser ? (
-          <div className="text-center text-gray-500">Loading...</div>
-        ) : (
-          <UserList
-            users={users}
-            onSelectUser={(userId) => {
-              setSelectedUserId(userId);
-              setIsSelected(true);
-            }}
-          />
-        )}
-        <div className="mt-auto p-4">
-          <button
-            onClick={handleLogout}
-            className="w-full bg-gray-800 text-white p-2 rounded-md hover:bg-gray-700 focus:outline-none"
+    <div style={{backgroundColor:"#2c2c2c"}} className="h-screen flex flex-row justify-center items-center ">
+      <div className=" rounded-lg shadow-md w-full max-w-5xl">
+        <div className="h-screen flex flex-row">
+          {/* Left Sidebar - User List */}
+          <div style={{backgroundColor:"#EFF3EA"}}
+            className={
+              isSelected && screenSize === "small"
+                ? "hidden"
+                : "w-full md:w-2/5 lg:w-2/6 border-b lg:border-r flex flex-col h-full"
+            }
           >
-            Logout
-          </button>
-        </div>
-      </div>
+            {/* Header */}
+            <div className="p-4 border-b border-FFE2E2 flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-800">Users</h2>
+            </div>
 
-      {/* Right Side - Chat Area */}
-      <div
-        className={
-          screenSize === 'small' && !isSelected
-            ? 'hidden'
-            : 'w-full md:w-4/5 lg:w-3/4 flex-1 flex flex-col h-full'
-        }
-      >
-        {selectedUser ? (
-          <>
-            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-8 h-8 flex items-center justify-center bg-blue-500 text-white rounded-full">
-                  {selectedUser.name.charAt(0).toUpperCase()}
-                </div>
-                <h3 className="ml-3 font-semibold text-gray-800">{selectedUser.name}</h3>
+            {/* User List or Loading State */}
+            {loadingUser ? (
+              <div className="flex-1 flex items-center justify-center text-gray-500">
+                Loading...
               </div>
-              {screenSize === 'small' && (
-                <button
-                  onClick={() => setIsSelected(false)}
-                  className="bg-gray-800 text-white p-2 rounded-md ml-4 mt-2"
-                >
-                  Back
-                </button>
-              )}
+            ) : (
+              <UserList
+                users={users}
+                onSelectUser={(userId) => {
+                  setSelectedUserId(userId);
+                  setIsSelected(true);
+                }}
+              />
+            )}
+
+            {/* Footer */}
+            <div
+             className="mt-auto p-4 flex items-center space-x-4">
+              <button
+                onClick={handleProfileClick}
+                style={{backgroundColor:"#3D3D3D"}}
+                className="bg-black-800 w-96 text-white px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              >
+                Profile
+              </button>
             </div>
-            <div className="flex-1 overflow-auto p-4 bg-gray-50">
-              {loadingChat ? (
-                <div>Loading Chats...</div>
-              ) : chats.length === 0 ? (
-                <p className="text-center text-gray-500">No messages yet</p>
-              ) : (
-                <Chats messages={chats} selectedUserId={selectedUserId} />
-              )}
-            </div>
-            <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200 bg-white">
-              <div className="flex items-center space-x-2">
-                <input
-                  type="text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder="Type a message"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
-                />
-                <button
-                  type="submit"
-                  className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <div className="flex-1 flex items-center justify-center bg-gray-50">
-            <p className="text-gray-500">Select a chat to start messaging</p>
           </div>
-        )}
+
+          {/* Right Side - Chat Area */}
+          <div style={{backgroundColor:"#F8FAFC"}}
+            className={
+              screenSize === "small" && !isSelected
+                ? "hidden"
+                : "w-full md:w-4/5 lg:w-3/4 flex-1 flex flex-col h-full"
+            }
+          >
+            {selectedUser ? (
+              <>
+                {/* Chat Header */}
+                <div className="p-4 border-b border-FFE2E2 flex items-center justify-between bg-FFFDEC">
+                  <div className="flex items-center">
+                    {/* Profile Images */}
+                    <img
+                      src={defaultProfilePicture} // Use default image if no profile picture
+                      alt="User Avatar"
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                    <h3 className="ml-3 text-lg font-semibold text-gray-800">
+                      {selectedUser.name}
+                    </h3>
+                  </div>
+                  {screenSize === "small" && (
+                    <button
+                      onClick={() => setIsSelected(false)}
+                      className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700"
+                    >
+                      Back
+                    </button>
+                  )}
+                </div>
+
+                {/* Chat Messages */}
+                <div className="flex-1 overflow-auto bg-F5EFFF">
+                  {loadingChat ? (
+                    <div className="text-center text-gray-500">Loading Chats...</div>
+                  ) : chats.length === 0 ? (
+                    <p className="text-center text-gray-500">No messages yet</p>
+                  ) : (
+                    <Chats messages={chats} selectedUserId={selectedUserId} />
+                  )}
+                </div>
+
+                {/* Message Input */}
+                <form
+                  onSubmit={handleSendMessage}
+                  className="p-4 border-t border-FFE2E2 bg-FFFDEC"
+                >
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      placeholder="Type a message"
+                      className="flex-1 px-4 py-2 border border-FFCFCF rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                    <button
+                      type="submit"
+                      className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div className="flex-1 flex items-center justify-center bg-F5EFFF">
+                <p className="text-gray-500">Select a chat to start messaging</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
+
   );
 }
