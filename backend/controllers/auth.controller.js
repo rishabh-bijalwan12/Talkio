@@ -84,9 +84,9 @@ exports.GetAllUser = async (req, res) => {
 }
 
 exports.GetUser = async (req,res) => {
-    const id = req.param.id
+    const id = req.params.id
     try{
-        const user = await User.findOne({id});
+        const user = await User.findOne({_id:id});
         if (!user) {
             return res.status(404).json({ message: "No user found" });
         }
