@@ -25,7 +25,7 @@ function UserProfile() {
         };
 
         fetchUserData();
-    }, [myId]);
+    }, []);
 
     const handleLogout = () => {
         localStorage.clear();
