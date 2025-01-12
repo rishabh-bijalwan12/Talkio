@@ -15,9 +15,11 @@ export function Home() {
   const [newMessage, setNewMessage] = useState('');
   const [loadingUser, setLoadingUser] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
+  const [loadingSendMsg, setLoadingSendMsg] = useState(false);
   const [screenSize, setScreenSize] = useState('large');
   const [isSelected, setIsSelected] = useState(false);
   const [createdAt, setCreatedAt] = useState();
+
 
   const navigate = useNavigate();
   const socket = useRef();
@@ -92,6 +94,7 @@ export function Home() {
     e.preventDefault();
     if (newMessage.trim()) {
       try {
+        setLoadingSendMsg(true);
         const response = await fetch(`https://talkio-cy0z.onrender.com/api/message/sendmessage/${selectedUserId}`, {
           method: 'POST',
           headers: {
@@ -122,6 +125,7 @@ export function Home() {
       } catch (error) {
         console.error('Error sending message:', error);
       }
+      setLoadingSendMsg(false);
     }
   };
 
@@ -253,9 +257,9 @@ export function Home() {
                     />
                     <button
                       type="submit"
-                      className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className={`p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500  `}
                     >
-                      Send
+                      {!loadingSendMsg ? 'Send' : 'wait...'}
                     </button>
                   </div>
                 </form>
