@@ -154,7 +154,7 @@ export function Home() {
   }
 
   return (
-    <div style={{backgroundColor:"#2c2c2c"}} className="h-screen flex flex-row justify-center items-center ">
+    <div style={{backgroundColor:"#2c2c2c"}} className="flex flex-row justify-center items-center ">
       <div className=" rounded-lg shadow-md w-full max-w-5xl">
         <div className="h-screen flex flex-row">
           {/* Left Sidebar - User List */}
@@ -162,7 +162,7 @@ export function Home() {
             className={
               isSelected && screenSize === "small"
                 ? "hidden"
-                : "w-full md:w-2/5 lg:w-2/6 border-b lg:border-r flex flex-col h-full"
+                : "w-full md:w-2/5 lg:w-2/6 border-b lg:border-r flex flex-col h-5/6 mt-12"
             }
           >
             {/* Header */}
@@ -203,7 +203,7 @@ export function Home() {
             className={
               screenSize === "small" && !isSelected
                 ? "hidden"
-                : "w-full md:w-4/5 lg:w-3/4 flex-1 flex flex-col h-full"
+                : "w-full md:w-4/5 lg:w-3/4 flex-1 flex flex-col h-5/6 mt-12"
             }
           >
             {selectedUser ? (
